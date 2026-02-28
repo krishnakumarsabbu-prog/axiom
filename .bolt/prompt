@@ -1,0 +1,11 @@
+Build an enterprise-grade, multi-tenant web app.
+Tech: React + Vite + TypeScript + Tailwind. No Next.js. No Remix.
+Use a Mock API Service Layer that mimics backend contracts (so later we can replace with Spring Boot).
+Keep all business logic in src/services/* and src/domain/* (no logic inside components).
+Use Zustand (or Redux Toolkit) for app state; prefer Zustand for simplicity.
+Use React Router for routing.
+Use Zod for validation.
+Use a consistent UI component library approach (either shadcn-like local components or simple Tailwind components).
+Every feature must be dynamic/config-driven (JSON schemas, mappings, connector definitions).
+Multi-tenancy: tenantId is required on all data models and service calls.
+Correlation ID: system must support correlationId passed with each request; persist and use it for joins.
