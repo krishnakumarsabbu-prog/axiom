@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useExperimentStore, useTenantStore } from '../../stores';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useExperimentStore, useTenantStore, useMappingStore } from '../../stores';
 import { Button, Badge, Card, Spinner, CopyButton } from '../../components/ui';
 import type { Experiment, ABConfig, CCConfig } from '../../domain';
+import { MappingHighlightCards } from './mapping/MappingHighlightCards';
 
 const statusVariant: Record<Experiment['status'], 'default' | 'success' | 'warning' | 'danger'> = {
   draft: 'default',
@@ -88,16 +89,15 @@ const ProxyUrlBlock: React.FC<{ label: string; value: string; masked?: boolean }
 export const ExperimentDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const location = useLocation();
   const { currentTenant } = useTenantStore();
   const { currentExperiment, isLoading, loadExperiment, updateStatus, clearCurrent } =
     useExperimentStore();
-
-  const isTrafficTab = location.pathname.endsWith('/traffic');
+  const { mapping, loadMapping } = useMappingStore();
 
   useEffect(() => {
     if (currentTenant && id) {
       loadExperiment(currentTenant.id, id);
+      loadMapping(currentTenant.id, id);
     }
     return () => clearCurrent();
   }, [currentTenant?.id, id]);
@@ -183,23 +183,21 @@ export const ExperimentDetailPage: React.FC = () => {
       <div className="flex border-b border-border mb-6">
         <button
           onClick={() => navigate(`/app/experiments/${id}`)}
-          className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
-            !isTrafficTab
-              ? 'border-foreground text-foreground'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
+          className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 border-foreground text-foreground -mb-px"
         >
           Overview
         </button>
         <button
           onClick={() => navigate(`/app/experiments/${id}/traffic`)}
-          className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
-            isTrafficTab
-              ? 'border-foreground text-foreground'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
+          className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground -mb-px"
         >
           Traffic Logs
+        </button>
+        <button
+          onClick={() => navigate(`/app/experiments/${id}/mapping`)}
+          className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground -mb-px"
+        >
+          Response Mapping
         </button>
       </div>
 
@@ -237,6 +235,36 @@ export const ExperimentDetailPage: React.FC = () => {
             <SummaryCard label="Errors" value="—" subtitle="See Traffic Logs" link={`/app/experiments/${id}/traffic`} navigate={navigate} />
           </div>
         </Card>
+
+        {mapping && mapping.fields.length > 0 && currentTenant && (
+          <Card padding="md">
+            <MappingHighlightCards
+              mapping={mapping}
+              tenantId={currentTenant.id}
+              experimentId={currentExperiment.id}
+              experimentType={currentExperiment.type}
+            />
+          </Card>
+        )}
+
+        {(!mapping || mapping.fields.length === 0) && (
+          <Card padding="md">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Response Highlights</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  No field mappings configured yet.
+                </p>
+              </div>
+              <button
+                onClick={() => navigate(`/app/experiments/${id}/mapping`)}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors border border-border rounded-[var(--radius)] px-3 py-1.5"
+              >
+                Configure Mapping
+              </button>
+            </div>
+          </Card>
+        )}
 
         <Card padding="md">
           <SectionHeader title="Experiment Configuration" />

@@ -8,6 +8,7 @@ import {
   ExperimentNewPage,
   ExperimentDetailPage,
   TrafficPage,
+  MappingPage,
   ConnectorsPage,
   MappingsPage,
   BuilderPage,
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: 'experiments/:id/traffic',
         element: <TrafficPage />
+      },
+      {
+        path: 'experiments/:id/mapping',
+        element: <MappingPage />
       },
       {
         path: 'connectors',

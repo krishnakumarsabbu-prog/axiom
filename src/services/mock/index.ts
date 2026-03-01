@@ -3,4 +3,5 @@ export * from './tenantService';
 export * from './experimentService';
 export * from './proxyService';
 export * from './trafficService';
+export * from './mappingService';
 export * from './data';
