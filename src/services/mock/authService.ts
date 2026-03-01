@@ -1,5 +1,6 @@
 import type { LoginRequest, UserSession, User } from '../../domain';
 import { mockUsers, mockPasswords } from './data';
+import { runSeedIfNeeded } from './seedRunner';
 
 const SESSION_KEY = 'experiment-portal-session';
 
@@ -38,6 +39,7 @@ export const authService = {
     const session = createSession(user, activeTenantId);
 
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    runSeedIfNeeded();
 
     return session;
   },
@@ -60,6 +62,7 @@ export const authService = {
         return null;
       }
 
+      runSeedIfNeeded();
       return session;
     } catch {
       localStorage.removeItem(SESSION_KEY);
