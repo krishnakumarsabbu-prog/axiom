@@ -6,3 +6,4 @@ export * from './mappingStore';
 export * from './themeStore';
 export * from './connectorStore';
 export * from './metricsStore';
+export * from './dashboardStore';

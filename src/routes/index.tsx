@@ -15,7 +15,10 @@ import {
   ConnectorMappingPage,
   MetricsPage,
   MappingsPage,
-  BuilderPage,
+  BuilderListPage,
+  BuilderNewPage,
+  BuilderEditorPage,
+  DashboardViewPage,
   SettingsPage
 } from '../pages';
 
@@ -90,7 +93,19 @@ export const router = createBrowserRouter([
       },
       {
         path: 'builder',
-        element: <BuilderPage />
+        element: <BuilderListPage />
+      },
+      {
+        path: 'builder/new',
+        element: <BuilderNewPage />
+      },
+      {
+        path: 'builder/:id/edit',
+        element: <BuilderEditorPage />
+      },
+      {
+        path: 'dashboards/:id',
+        element: <DashboardViewPage />
       },
       {
         path: 'settings',

@@ -6,3 +6,4 @@ export * from './TrafficRecord';
 export * from './mapping';
 export * from './Connector';
 export * from './BusinessMetricEvent';
+export * from './Dashboard';

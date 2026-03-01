@@ -6,4 +6,5 @@ export * from './trafficService';
 export * from './mappingService';
 export * from './connectorService';
 export * from './metricsService';
+export * from './dashboardService';
 export * from './data';

@@ -7,4 +7,5 @@ export * from './connectors';
 export * from './MetricsPage';
 export * from './MappingsPage';
 export * from './BuilderPage';
+export * from './builder';
 export * from './SettingsPage';
