@@ -7,3 +7,4 @@ export * from './Spinner';
 export * from './Badge';
 export * from './CopyButton';
 export * from './EmptyState';
+export * from './MiniChart';

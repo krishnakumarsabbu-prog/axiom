@@ -7,6 +7,7 @@ import {
   ExperimentsPage,
   ExperimentNewPage,
   ExperimentDetailPage,
+  ExperimentDashboardPage,
   TrafficPage,
   MappingPage,
   ConnectorsPage,
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: 'experiments/:id',
         element: <ExperimentDetailPage />
+      },
+      {
+        path: 'experiments/:id/dashboard',
+        element: <ExperimentDashboardPage />
       },
       {
         path: 'experiments/:id/traffic',

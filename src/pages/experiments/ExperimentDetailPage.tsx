@@ -188,6 +188,12 @@ export const ExperimentDetailPage: React.FC = () => {
           Overview
         </button>
         <button
+          onClick={() => navigate(`/app/experiments/${id}/dashboard`)}
+          className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground -mb-px"
+        >
+          Dashboard
+        </button>
+        <button
           onClick={() => navigate(`/app/experiments/${id}/traffic`)}
           className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground -mb-px"
         >
