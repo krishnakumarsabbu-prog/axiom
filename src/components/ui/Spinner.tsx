@@ -17,7 +17,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
 
   return (
     <div
-      className={`${sizeStyles[size]} border-primary-600 border-t-transparent rounded-full animate-spin ${className}`}
+      className={`${sizeStyles[size]} border-border-subtle border-t-brand-base rounded-full animate-spin ${className}`}
       role="status"
       aria-label="Loading"
     />

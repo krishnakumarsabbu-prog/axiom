@@ -23,14 +23,14 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-neutral-100">
+    <div className="min-h-screen flex items-center justify-center bg-bg-base bg-gradient-radial px-4">
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary-600 mb-2">Experiment Proxy Portal</h1>
-          <p className="text-neutral-600">Enterprise Multi-Tenant Platform</p>
+          <h1 className="text-3xl font-display font-bold text-brand-base mb-2 tracking-tight">Experiment Proxy Portal</h1>
+          <p className="text-fg-muted">Enterprise Multi-Tenant Platform</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <Input
             type="email"
             label="Email Address"
@@ -50,8 +50,8 @@ export const LoginPage: React.FC = () => {
           />
 
           {error && (
-            <div className="p-3 bg-error-50 border border-error-200 rounded-lg">
-              <p className="text-sm text-error-700">{error}</p>
+            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+              <p className="text-sm text-red-400">{error}</p>
             </div>
           )}
 
@@ -59,24 +59,24 @@ export const LoginPage: React.FC = () => {
             type="submit"
             variant="primary"
             size="lg"
-            className="w-full"
+            className="w-full mt-6"
             disabled={isLoading}
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
           </Button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-neutral-200">
-          <p className="text-sm text-neutral-600 text-center">Demo Credentials:</p>
-          <div className="mt-3 space-y-2 text-xs text-neutral-500">
-            <div className="bg-neutral-50 p-2 rounded">
-              <strong>Admin:</strong> admin@acme.com / admin123
+        <div className="mt-6 pt-6 border-t border-border-base">
+          <p className="text-sm text-fg-muted text-center mb-3">Demo Credentials</p>
+          <div className="space-y-2 text-xs">
+            <div className="bg-bg-base p-3 rounded-lg border border-border-base">
+              <span className="text-fg-muted">Admin:</span> <span className="text-fg-base font-medium">admin@acme.com</span> <span className="text-fg-muted">/ admin123</span>
             </div>
-            <div className="bg-neutral-50 p-2 rounded">
-              <strong>User:</strong> user@techstart.com / user123
+            <div className="bg-bg-base p-3 rounded-lg border border-border-base">
+              <span className="text-fg-muted">User:</span> <span className="text-fg-base font-medium">user@techstart.com</span> <span className="text-fg-muted">/ user123</span>
             </div>
-            <div className="bg-neutral-50 p-2 rounded">
-              <strong>Viewer:</strong> viewer@global.com / viewer123
+            <div className="bg-bg-base p-3 rounded-lg border border-border-base">
+              <span className="text-fg-muted">Viewer:</span> <span className="text-fg-base font-medium">viewer@global.com</span> <span className="text-fg-muted">/ viewer123</span>
             </div>
           </div>
         </div>

@@ -4,12 +4,14 @@ interface CardProps {
   children: React.ReactNode;
   className?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  hover?: boolean;
 }
 
 export const Card: React.FC<CardProps> = ({
   children,
   className = '',
-  padding = 'md'
+  padding = 'md',
+  hover = false
 }) => {
   const paddingStyles = {
     none: '',
@@ -18,8 +20,10 @@ export const Card: React.FC<CardProps> = ({
     lg: 'p-8'
   };
 
+  const hoverStyles = hover ? 'hover:border-border-subtle transition-all duration-200 cursor-pointer' : '';
+
   return (
-    <div className={`bg-white rounded-lg border border-neutral-200 shadow-sm ${paddingStyles[padding]} ${className}`}>
+    <div className={`glass-card ${paddingStyles[padding]} ${hoverStyles} ${className}`}>
       {children}
     </div>
   );
