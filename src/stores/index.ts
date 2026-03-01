@@ -4,3 +4,5 @@ export * from './experimentStore';
 export * from './trafficStore';
 export * from './mappingStore';
 export * from './themeStore';
+export * from './connectorStore';
+export * from './metricsStore';

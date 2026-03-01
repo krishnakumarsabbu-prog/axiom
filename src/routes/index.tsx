@@ -10,6 +10,9 @@ import {
   TrafficPage,
   MappingPage,
   ConnectorsPage,
+  ConnectorNewPage,
+  ConnectorMappingPage,
+  MetricsPage,
   MappingsPage,
   BuilderPage,
   SettingsPage
@@ -63,6 +66,18 @@ export const router = createBrowserRouter([
       {
         path: 'connectors',
         element: <ConnectorsPage />
+      },
+      {
+        path: 'connectors/new',
+        element: <ConnectorNewPage />
+      },
+      {
+        path: 'connectors/:id/mapping',
+        element: <ConnectorMappingPage />
+      },
+      {
+        path: 'metrics',
+        element: <MetricsPage />
       },
       {
         path: 'mappings',

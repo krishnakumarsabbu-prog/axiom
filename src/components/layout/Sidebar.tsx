@@ -52,10 +52,17 @@ const SettingsIcon = () => (
   </svg>
 );
 
+const MetricsIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+  </svg>
+);
+
 const navItems: NavItem[] = [
   { label: 'Dashboard',    path: '/app/dashboard',   icon: <DashboardIcon /> },
   { label: 'Experiments',  path: '/app/experiments', icon: <ExperimentsIcon /> },
   { label: 'Connectors',   path: '/app/connectors',  icon: <ConnectorsIcon /> },
+  { label: 'Metrics',      path: '/app/metrics',     icon: <MetricsIcon /> },
   { label: 'Mappings',     path: '/app/mappings',    icon: <MappingsIcon /> },
   { label: 'Builder',      path: '/app/builder',     icon: <BuilderIcon /> },
   { label: 'Settings',     path: '/app/settings',    icon: <SettingsIcon /> },
