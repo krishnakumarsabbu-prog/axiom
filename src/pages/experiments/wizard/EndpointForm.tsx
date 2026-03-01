@@ -38,7 +38,7 @@ export const EndpointForm: React.FC<Props> = ({ label, value, errors = {}, onCha
   };
 
   return (
-    <div className="p-4 bg-secondary border border-border rounded-[var(--radius)] space-y-4">
+    <div className="p-4 bg-background border border-border rounded-[var(--radius)] space-y-4">
       <p className="text-sm font-semibold text-foreground">{label}</p>
 
       <div className="flex gap-3">

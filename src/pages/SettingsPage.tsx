@@ -7,15 +7,15 @@ export const SettingsPage: React.FC = () => {
   const { currentTenant } = useTenantStore();
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Settings</h1>
-        <p className="text-muted-foreground mt-2">Manage your account and tenant settings</p>
+        <h1 className="text-2xl font-display font-bold text-foreground">Settings</h1>
+        <p className="text-sm text-muted-foreground mt-1">Manage your account and tenant settings</p>
       </div>
 
       <div className="space-y-6">
         <Card padding="md">
-          <h3 className="text-lg font-display font-semibold text-foreground mb-4">User Profile</h3>
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">User Profile</h3>
           <div className="space-y-4">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Name</p>
@@ -35,7 +35,7 @@ export const SettingsPage: React.FC = () => {
         </Card>
 
         <Card padding="md">
-          <h3 className="text-lg font-display font-semibold text-foreground mb-4">Current Tenant</h3>
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Current Tenant</h3>
           <div className="space-y-4">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Tenant Name</p>
@@ -61,12 +61,12 @@ export const SettingsPage: React.FC = () => {
         </Card>
 
         <Card padding="md">
-          <h3 className="text-lg font-display font-semibold text-foreground mb-4">Tenant Access</h3>
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Tenant Access</h3>
           <p className="text-sm text-muted-foreground mb-3">You have access to the following tenants:</p>
           <div className="space-y-2">
             {session?.user.tenantIds.map((tenantId) => (
-              <div key={tenantId} className="flex items-center gap-2 px-3 py-2 bg-secondary border border-border rounded-[var(--radius)]">
-                <div className="w-2 h-2 bg-foreground rounded-full"></div>
+              <div key={tenantId} className="flex items-center gap-2 px-3 py-2 bg-background border border-border rounded-[var(--radius)]">
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
                 <span className="text-sm text-foreground">{tenantId}</span>
               </div>
             ))}

@@ -4,10 +4,10 @@ import { EmptyState } from '../components/ui/EmptyState';
 
 export const BuilderPage: React.FC = () => {
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Builder</h1>
-        <p className="text-muted-foreground mt-2">Visual workflow and configuration builder</p>
+        <h1 className="text-2xl font-display font-bold text-foreground">Builder</h1>
+        <p className="text-sm text-muted-foreground mt-1">Visual workflow and configuration builder</p>
       </div>
 
       <Card>
