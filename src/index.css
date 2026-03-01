@@ -1,45 +1,62 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0A0C10;
+  --color-foreground: #F4F6F8;
+  --color-muted: #181D24;
+  --color-muted-foreground: #A8B0BA;
+  --color-card: #0E1218;
+  --color-card-foreground: #F4F6F8;
+  --color-popover: #0E1218;
+  --color-popover-foreground: #F4F6F8;
+  --color-border: #1E2630;
+  --color-input: #1E2630;
+  --color-primary: #F4F6F8;
+  --color-primary-foreground: #0A0C10;
+  --color-secondary: #121820;
+  --color-secondary-foreground: #F4F6F8;
+  --color-accent: #181D24;
+  --color-accent-foreground: #F4F6F8;
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #F8FAFC;
+  --color-ring: #F4F6F8;
+  --radius: 14px;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+}
 
 @layer base {
-  :root {
-    --bg-base: #0B0D10;
-    --bg-panel: #111418;
-    --bg-panel2: #181C21;
-    --fg-base: #F4F6F8;
-    --fg-muted: #8B92A0;
-    --border-base: #1E232B;
-    --border-subtle: #262B34;
-    --shadow: rgba(0, 0, 0, 0.4);
-  }
-
   * {
-    border-color: var(--border-base);
+    border-color: var(--color-border);
   }
 
   body {
-    background-color: var(--bg-base);
-    color: var(--fg-base);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
     letter-spacing: -0.025em;
     line-height: 1.2;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   ::selection {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(244, 246, 248, 0.15);
     color: #F4F6F8;
   }
 
   :focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid rgba(244, 246, 248, 0.2);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -48,44 +65,33 @@
     outline: none;
   }
 
-  /* Custom Scrollbars */
+  input, select, textarea, button {
+    font-family: inherit;
+    color: inherit;
+  }
+
+  select {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-foreground);
+  }
+
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
-
   ::-webkit-scrollbar-track {
-    background: var(--bg-panel);
+    background: var(--color-background);
   }
-
   ::-webkit-scrollbar-thumb {
-    background: var(--border-subtle);
-    border-radius: 4px;
+    background: #2A3040;
+    border-radius: 3px;
   }
-
   ::-webkit-scrollbar-thumb:hover {
-    background: #3A4049;
+    background: #3A4050;
   }
-
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--border-subtle) var(--bg-panel);
-  }
-}
-
-@layer utilities {
-  .glass-panel {
-    background-color: var(--bg-panel);
-    border: 1px solid var(--border-base);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
-  }
-
-  .glass-card {
-    background-color: var(--bg-panel2);
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    border-radius: 1.125rem;
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+    scrollbar-color: #2A3040 var(--color-background);
   }
 }

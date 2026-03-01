@@ -14,18 +14,18 @@ export const Input: React.FC<InputProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-fg-base mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           {label}
         </label>
       )}
       <input
-        className={`w-full px-3 py-2.5 bg-bg-panel2 border rounded-lg text-fg-base placeholder:text-fg-muted focus:outline-none focus:border-brand-base focus:shadow-glow transition-all duration-200 ${
-          error ? 'border-red-500' : 'border-border-base'
+        className={`w-full h-10 px-3 bg-card border rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:ring-offset-1 focus:ring-offset-background transition-colors duration-150 ${
+          error ? 'border-destructive' : 'border-input'
         } ${className}`}
         {...props}
       />
       {error && (
-        <p className="mt-1.5 text-sm text-red-400">{error}</p>
+        <p className="mt-1.5 text-sm text-destructive">{error}</p>
       )}
     </div>
   );

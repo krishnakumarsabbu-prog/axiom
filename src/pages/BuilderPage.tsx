@@ -6,8 +6,8 @@ export const BuilderPage: React.FC = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-brand-base">Builder</h1>
-        <p className="text-fg-muted mt-2">Visual workflow and configuration builder</p>
+        <h1 className="text-3xl font-display font-bold text-foreground">Builder</h1>
+        <p className="text-muted-foreground mt-2">Visual workflow and configuration builder</p>
       </div>
 
       <Card>

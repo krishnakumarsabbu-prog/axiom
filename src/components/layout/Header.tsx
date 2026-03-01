@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="h-16 glass-panel border-b border-border-base flex items-center justify-between px-6 sticky top-0 z-40 backdrop-blur-xl bg-bg-base/80">
+    <header className="h-14 border-b border-border flex items-center justify-between px-6 sticky top-0 z-40 backdrop-blur-xl bg-background/70">
       <div className="flex items-center gap-6">
         <TenantSwitcher />
 
@@ -40,10 +40,10 @@ export const Header: React.FC = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="w-96 px-4 py-2 pl-10 bg-bg-panel2 border border-border-base rounded-lg focus:outline-none focus:border-brand-base focus:shadow-glow text-fg-base placeholder:text-fg-muted transition-all duration-200"
+            className="w-80 h-9 px-3 pl-9 bg-card border border-input rounded-[var(--radius)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:ring-offset-1 focus:ring-offset-background transition-colors duration-150"
           />
           <svg
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-fg-muted"
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -55,28 +55,28 @@ export const Header: React.FC = () => {
 
       <div className="flex items-center gap-4">
         {currentTenant && (
-          <div className="text-right pr-4 border-r border-border-base">
-            <p className="text-xs text-fg-muted">Active Tenant</p>
-            <p className="text-sm font-medium text-fg-base">{currentTenant.name}</p>
+          <div className="text-right pr-4 border-r border-border">
+            <p className="text-xs text-muted-foreground">Active Tenant</p>
+            <p className="text-sm font-medium text-foreground">{currentTenant.name}</p>
           </div>
         )}
 
         <div className="relative" ref={userMenuRef}>
           <button
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            className="flex items-center gap-2 hover:bg-bg-panel2 rounded-lg px-3 py-2 transition-all duration-200"
+            className="flex items-center gap-2 hover:bg-accent rounded-[var(--radius)] px-3 py-2 transition-colors duration-150"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-brand-base to-fg-muted rounded-full flex items-center justify-center shadow-subtle">
-              <span className="text-sm font-semibold text-bg-base">
+            <div className="w-8 h-8 bg-secondary border border-border rounded-full flex items-center justify-center">
+              <span className="text-sm font-semibold text-foreground">
                 {session?.user.name.charAt(0) || 'U'}
               </span>
             </div>
             <div className="text-left">
-              <p className="text-sm font-medium text-fg-base">{session?.user.name}</p>
-              <p className="text-xs text-fg-muted capitalize">{session?.user.role}</p>
+              <p className="text-sm font-medium text-foreground">{session?.user.name}</p>
+              <p className="text-xs text-muted-foreground capitalize">{session?.user.role}</p>
             </div>
             <svg
-              className={`w-4 h-4 text-fg-muted transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`}
+              className={`w-4 h-4 text-muted-foreground transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -86,24 +86,24 @@ export const Header: React.FC = () => {
           </button>
 
           {isUserMenuOpen && (
-            <div className="absolute top-full right-0 mt-2 w-56 glass-card shadow-soft z-50">
+            <div className="absolute top-full right-0 mt-2 w-56 bg-popover border border-border rounded-[var(--radius)] shadow-[0_4px_16px_rgba(0,0,0,0.4)] z-50">
               <div className="p-2">
-                <div className="px-3 py-2 border-b border-border-base">
-                  <p className="text-sm font-medium text-fg-base">{session?.user.name}</p>
-                  <p className="text-xs text-fg-muted">{session?.user.email}</p>
+                <div className="px-3 py-2 border-b border-border">
+                  <p className="text-sm font-medium text-popover-foreground">{session?.user.name}</p>
+                  <p className="text-xs text-muted-foreground">{session?.user.email}</p>
                 </div>
                 <button
                   onClick={() => {
                     setIsUserMenuOpen(false);
                     navigate('/app/settings');
                   }}
-                  className="w-full text-left px-3 py-2 text-sm text-fg-base hover:bg-bg-panel rounded-lg mt-2 transition-colors"
+                  className="w-full text-left px-3 py-2 text-sm text-popover-foreground hover:bg-accent rounded-[var(--radius)] mt-2 transition-colors"
                 >
                   Profile Settings
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                  className="w-full text-left px-3 py-2 text-sm text-destructive hover:bg-destructive/10 rounded-[var(--radius)] transition-colors"
                 >
                   Sign Out
                 </button>

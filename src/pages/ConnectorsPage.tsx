@@ -6,8 +6,8 @@ export const ConnectorsPage: React.FC = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-brand-base">Connectors</h1>
-        <p className="text-fg-muted mt-2">Connect to external services and APIs</p>
+        <h1 className="text-3xl font-display font-bold text-foreground">Connectors</h1>
+        <p className="text-muted-foreground mt-2">Connect to external services and APIs</p>
       </div>
 
       <Card>

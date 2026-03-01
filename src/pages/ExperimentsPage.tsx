@@ -6,8 +6,8 @@ export const ExperimentsPage: React.FC = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-brand-base">Experiments</h1>
-        <p className="text-fg-muted mt-2">Manage your A/B tests and feature flags</p>
+        <h1 className="text-3xl font-display font-bold text-foreground">Experiments</h1>
+        <p className="text-muted-foreground mt-2">Manage your A/B tests and feature flags</p>
       </div>
 
       <Card>

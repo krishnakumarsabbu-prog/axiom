@@ -20,10 +20,10 @@ export const Card: React.FC<CardProps> = ({
     lg: 'p-8'
   };
 
-  const hoverStyles = hover ? 'hover:border-border-subtle transition-all duration-200 cursor-pointer' : '';
+  const hoverStyles = hover ? 'hover:border-muted-foreground/20 transition-colors duration-150 cursor-pointer' : '';
 
   return (
-    <div className={`glass-card ${paddingStyles[padding]} ${hoverStyles} ${className}`}>
+    <div className={`bg-card border border-border rounded-[var(--radius)] shadow-[0_1px_3px_rgba(0,0,0,0.3)] ${paddingStyles[padding]} ${hoverStyles} ${className}`}>
       {children}
     </div>
   );
