@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useExperimentStore, useTenantStore } from '../../stores';
 import { Button, Badge, Card, Spinner, CopyButton } from '../../components/ui';
 import type { Experiment, ABConfig, CCConfig } from '../../domain';
@@ -40,9 +40,13 @@ const Field: React.FC<{ label: string; value: React.ReactNode }> = ({ label, val
   </div>
 );
 
-const EndpointCard: React.FC<{ label: string; url: string; method: string; timeoutMs: number; headers: { key: string; value: string }[] }> = ({
-  label, url, method, timeoutMs, headers,
-}) => (
+const EndpointCard: React.FC<{
+  label: string;
+  url: string;
+  method: string;
+  timeoutMs: number;
+  headers: { key: string; value: string }[];
+}> = ({ label, url, method, timeoutMs, headers }) => (
   <div className="p-4 bg-secondary border border-border rounded-[var(--radius)]">
     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">{label}</p>
     <div className="space-y-2">
@@ -65,7 +69,11 @@ const EndpointCard: React.FC<{ label: string; url: string; method: string; timeo
   </div>
 );
 
-const ProxyUrlBlock: React.FC<{ label: string; value: string; masked?: boolean }> = ({ label, value, masked }) => (
+const ProxyUrlBlock: React.FC<{ label: string; value: string; masked?: boolean }> = ({
+  label,
+  value,
+  masked,
+}) => (
   <div className="space-y-1.5">
     <div className="flex items-center justify-between">
       <p className="text-sm font-medium text-foreground">{label}</p>
@@ -77,19 +85,15 @@ const ProxyUrlBlock: React.FC<{ label: string; value: string; masked?: boolean }
   </div>
 );
 
-const TrafficCard: React.FC<{ label: string; value: string; subtitle: string }> = ({ label, value, subtitle }) => (
-  <div className="p-4 bg-card border border-border rounded-[var(--radius)]">
-    <p className="text-xs text-muted-foreground mb-1">{label}</p>
-    <p className="text-2xl font-display font-bold text-foreground">{value}</p>
-    <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
-  </div>
-);
-
 export const ExperimentDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentTenant } = useTenantStore();
-  const { currentExperiment, isLoading, loadExperiment, updateStatus, clearCurrent } = useExperimentStore();
+  const { currentExperiment, isLoading, loadExperiment, updateStatus, clearCurrent } =
+    useExperimentStore();
+
+  const isTrafficTab = location.pathname.endsWith('/traffic');
 
   useEffect(() => {
     if (currentTenant && id) {
@@ -138,15 +142,23 @@ export const ExperimentDetailPage: React.FC = () => {
         className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M9 2L4 7l5 5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
         Back to Experiments
       </button>
 
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-6">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-3xl font-display font-bold text-foreground">{currentExperiment.name}</h1>
+            <h1 className="text-3xl font-display font-bold text-foreground">
+              {currentExperiment.name}
+            </h1>
             <Badge variant={statusVariant[currentExperiment.status]}>
               <span className="capitalize">{currentExperiment.status}</span>
             </Badge>
@@ -168,6 +180,29 @@ export const ExperimentDetailPage: React.FC = () => {
         )}
       </div>
 
+      <div className="flex border-b border-border mb-6">
+        <button
+          onClick={() => navigate(`/app/experiments/${id}`)}
+          className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
+            !isTrafficTab
+              ? 'border-foreground text-foreground'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Overview
+        </button>
+        <button
+          onClick={() => navigate(`/app/experiments/${id}/traffic`)}
+          className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
+            isTrafficTab
+              ? 'border-foreground text-foreground'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Traffic Logs
+        </button>
+      </div>
+
       <div className="space-y-6">
         <Card padding="md">
           <SectionHeader title="Proxy Integration" />
@@ -183,36 +218,66 @@ export const ExperimentDetailPage: React.FC = () => {
         <Card padding="md">
           <SectionHeader title="Traffic Summary" />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <TrafficCard label="Total Requests" value="—" subtitle="Placeholder" />
+            <SummaryCard label="Total Requests" value="—" subtitle="See Traffic Logs" link={`/app/experiments/${id}/traffic`} navigate={navigate} />
             {ab ? (
               <>
-                <TrafficCard label="Variant A" value={`${ab.splitA}%`} subtitle="Target split" />
-                <TrafficCard label="Variant B" value={`${ab.splitB}%`} subtitle="Target split" />
+                <SummaryCard label="Variant A" value={`${ab.splitA}%`} subtitle="Target split" />
+                <SummaryCard label="Variant B" value={`${ab.splitB}%`} subtitle="Target split" />
               </>
             ) : (
               <>
-                <TrafficCard label="Champion" value="100%" subtitle="All traffic" />
-                <TrafficCard label="Challenger" value={cc?.executionMode === 'parallel' ? 'Shadow' : 'Sequential'} subtitle="Mode" />
+                <SummaryCard label="Champion" value="100%" subtitle="All traffic" />
+                <SummaryCard
+                  label="Challenger"
+                  value={cc?.executionMode === 'parallel' ? 'Shadow' : 'Sequential'}
+                  subtitle="Mode"
+                />
               </>
             )}
-            <TrafficCard label="Errors" value="—" subtitle="Placeholder" />
+            <SummaryCard label="Errors" value="—" subtitle="See Traffic Logs" link={`/app/experiments/${id}/traffic`} navigate={navigate} />
           </div>
         </Card>
 
         <Card padding="md">
           <SectionHeader title="Experiment Configuration" />
           <div className="bg-secondary border border-border rounded-[var(--radius)] px-4 divide-y divide-border mb-4">
-            <Field label="Created" value={new Date(currentExperiment.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} />
-            <Field label="Last Updated" value={new Date(currentExperiment.updatedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} />
-            <Field label="Experiment ID" value={<span className="font-mono text-xs">{currentExperiment.id}</span>} />
+            <Field
+              label="Created"
+              value={new Date(currentExperiment.createdAt).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            />
+            <Field
+              label="Last Updated"
+              value={new Date(currentExperiment.updatedAt).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            />
+            <Field
+              label="Experiment ID"
+              value={<span className="font-mono text-xs">{currentExperiment.id}</span>}
+            />
             {ab && (
               <>
-                <Field label="Traffic Split" value={`Variant A ${ab.splitA}% / Variant B ${ab.splitB}%`} />
-                <Field label="Bucketing Key" value={`${ab.bucketingKeySource === 'header' ? 'Header' : 'JSONPath'}: ${ab.bucketingKeyValue}`} />
+                <Field
+                  label="Traffic Split"
+                  value={`Variant A ${ab.splitA}% / Variant B ${ab.splitB}%`}
+                />
+                <Field
+                  label="Bucketing Key"
+                  value={`${ab.bucketingKeySource === 'header' ? 'Header' : 'JSONPath'}: ${ab.bucketingKeyValue}`}
+                />
               </>
             )}
             {cc && (
-              <Field label="Execution Mode" value={<span className="capitalize">{cc.executionMode}</span>} />
+              <Field
+                label="Execution Mode"
+                value={<span className="capitalize">{cc.executionMode}</span>}
+              />
             )}
           </div>
 
@@ -259,3 +324,20 @@ export const ExperimentDetailPage: React.FC = () => {
     </div>
   );
 };
+
+const SummaryCard: React.FC<{
+  label: string;
+  value: string;
+  subtitle: string;
+  link?: string;
+  navigate?: (path: string) => void;
+}> = ({ label, value, subtitle, link, navigate: nav }) => (
+  <div
+    className={`p-4 bg-card border border-border rounded-[var(--radius)] ${link ? 'cursor-pointer hover:border-muted-foreground/30 transition-colors' : ''}`}
+    onClick={link && nav ? () => nav(link) : undefined}
+  >
+    <p className="text-xs text-muted-foreground mb-1">{label}</p>
+    <p className="text-2xl font-display font-bold text-foreground">{value}</p>
+    <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
+  </div>
+);
